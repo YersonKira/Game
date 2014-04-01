@@ -6,7 +6,8 @@ class Principal {
     posiblesmovimientos: Array<model.Posicion> = null;
     constructor(canvas: HTMLCanvasElement) {
         this.juego = new model.Juego(model.Jugador.Jugador1);
-        document.getElementById('text').textContent = 'Jugador ' + this.juego.turno;
+        var text = document.getElementById('text');
+        text.textContent = 'Turno jugador ' + this.juego.turno;
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         var posicionseleccionada: model.Posicion = null;
@@ -25,6 +26,8 @@ class Principal {
             var columna = Math.ceil((e.x - this.canvas.offsetLeft) / lado);
             var fila = Math.ceil((e.y - this.canvas.offsetTop) / lado);
             var pos = new model.Posicion(fila, columna);
+            console.log(pos.toString());
+            console.log(this.juego.turno);
             if ((this.posiblesmovimientos == null || this.juego.verificarTurno(pos)) && this.juego.tablero[pos.fila][pos.columna] != 0) {
                 if (this.juego.verificarTurno(pos)) {
                     posicionseleccionada = pos;
@@ -40,6 +43,7 @@ class Principal {
                             alert('Ganador Jugador 1');
                         }
                         this.juego.cambiarTurno();
+                        text.textContent = 'Turno jugador ' + this.juego.turno;
                         if (this.juego.turno == model.Jugador.Jugador2) {
                             // Hacer jugada
                             setTimeout(() => {
@@ -47,11 +51,13 @@ class Principal {
                                 this.dibujarTablero();
                                 if (this.juego.yaGane()) {
                                     alert('Ganador Jugador 2');
+                                    return;
                                 }
                                 this.juego.cambiarTurno();
-                            }, 500);
+                                text.textContent = 'Turno jugador ' + this.juego.turno;
+                            }, 1000);
                         }
-                        document.getElementById('text').textContent = 'Jugador ' + this.juego.turno;
+                        //document.getElementById('text').textContent = 'Jugador ' + this.juego.turno;
                         break;
                     }
                 }

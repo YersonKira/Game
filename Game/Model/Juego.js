@@ -21,7 +21,7 @@ var model;
             var posibilidades = new Array();
             for (var i = 1; i < 4; i++) {
                 for (var j = 1; j < 4; j++) {
-                    if (this.turno == 1 /* Jugador1 */) {
+                    if (this.turno == Jugador.Jugador1) {
                         if (this.tablero[i][j] == 1) {
                             if (this.tablero[i + 1][j] == 0)
                                 posibilidades.push(this.crearJugada(new model.Posicion(i, j), new model.Posicion(i + 1, j)));
@@ -30,7 +30,7 @@ var model;
                             if (this.tablero[i + 1][j + 1] == 2 && this.tablero[i + 1][j + 1] != 1)
                                 posibilidades.push(this.crearJugada(new model.Posicion(i, j), new model.Posicion(i + 1, j + 1)));
                         }
-                    } else if (this.turno == 2 /* Jugador2 */) {
+                    } else if (this.turno == Jugador.Jugador2) {
                         if (this.tablero[i][j] == 2) {
                             if (this.tablero[i - 1][j] == 0)
                                 posibilidades.push(this.crearJugada(new model.Posicion(i, j), new model.Posicion(i - 1, j)));
@@ -49,10 +49,10 @@ var model;
             nuevotablero[destino.fila][destino.columna] = nuevotablero[origen.fila][origen.columna];
             nuevotablero[origen.fila][origen.columna] = 0;
             var res;
-            if (this.turno == 1 /* Jugador1 */)
-                res = new Juego(2 /* Jugador2 */);
-            else
-                res = new Juego(2 /* Jugador2 */);
+            if (this.turno == Jugador.Jugador1)
+                res = new Juego(Jugador.Jugador2);
+else
+                res = new Juego(Jugador.Jugador2);
             res.tablero = nuevotablero;
             return res;
         };
@@ -75,7 +75,7 @@ var model;
             var posiciones = new Array();
             var oponente = 2;
             var direccion = 1;
-            if (this.turno == 2 /* Jugador2 */) {
+            if (this.turno == model.Jugador.Jugador2) {
                 oponente = 1;
                 direccion = -1;
             }
@@ -91,10 +91,10 @@ var model;
             return this.tablero[posicion.fila][posicion.columna] == this.turno;
         };
         Juego.prototype.cambiarTurno = function () {
-            if (this.turno == 1 /* Jugador1 */)
-                this.turno = 2 /* Jugador2 */;
-            else
-                this.turno = 1 /* Jugador1 */;
+            if (this.turno == Jugador.Jugador1)
+                this.turno = Jugador.Jugador2;
+else
+                this.turno = Jugador.Jugador1;
         };
         Juego.prototype.obtenerMejorJugada = function () {
             var posibilidades = this.generarPosibilidades();
@@ -106,13 +106,13 @@ var model;
             for (var i = 0; i < posibilidades.length; i++) {
                 var MN = posibilidades[i].obtenerMaximoNivel();
                 posibilidades[i].cambiarTurno();
-                var piezas_opnente = piezas_oponente_actuales - posibilidades[i].CantidadDePiezas();
+                var piezas_oponente = piezas_oponente_actuales - posibilidades[i].CantidadDePiezas();
                 var CMO = posibilidades[i].generarPosibilidades().length;
                 if (CMO == 0) {
                     pos = i;
                     break;
-                } else if (MN + piezas_opnente + CMO > MH) {
-                    MH = MN + CMO + piezas_opnente;
+                } else if (MN + piezas_oponente + CMO > MH) {
+                    MH = MN + CMO + piezas_oponente;
                     pos = i;
                 }
             }
@@ -136,9 +136,9 @@ var model;
             var res = 0;
             for (var i = 1; i < 4; i++) {
                 for (var j = 1; j < 4; j++) {
-                    if (this.turno == 1 /* Jugador1 */ && this.tablero[i][j] == 1 /* Jugador1 */)
+                    if (this.turno == Jugador.Jugador1 && this.tablero[i][j] == Jugador.Jugador1)
                         res++;
-                    if (this.turno == 2 /* Jugador2 */ && this.tablero[i][j] == 2 /* Jugador2 */)
+                    if (this.turno == Jugador.Jugador2 && this.tablero[i][j] == Jugador.Jugador2)
                         res++;
                 }
             }
@@ -147,9 +147,9 @@ var model;
         Juego.prototype.llegueAlOtroExtremo = function () {
             for (var i = 1; i < 4; i++) {
                 for (var j = 1; j < 4; j++) {
-                    if (this.turno == 1 /* Jugador1 */ && this.tablero[i][j] == 1 /* Jugador1 */ && i == 3) {
+                    if (this.turno == Jugador.Jugador1 && this.tablero[i][j] == Jugador.Jugador1 && i == 3) {
                         return true;
-                    } else if (this.turno == 2 /* Jugador2 */ && this.tablero[i][j] == 2 /* Jugador2 */ && i == 1) {
+                    } else if (this.turno == Jugador.Jugador2 && this.tablero[i][j] == Jugador.Jugador2 && i == 1) {
                         return true;
                     }
                 }
@@ -160,9 +160,9 @@ var model;
             var MN = 0;
             for (var i = 1; i < 4; i++) {
                 for (var j = 1; j < 4; j++) {
-                    if (this.turno == 1 /* Jugador1 */ && this.tablero[i][j] == 1 /* Jugador1 */ && i > MN) {
+                    if (this.turno == Jugador.Jugador1 && this.tablero[i][j] == Jugador.Jugador1 && i > MN) {
                         MN = i;
-                    } else if (this.turno == 2 /* Jugador2 */ && this.tablero[i][j] == 2 /* Jugador2 */ && Math.abs(4 - i) > MN) {
+                    } else if (this.turno == Jugador.Jugador2 && this.tablero[i][j] == Jugador.Jugador2 && Math.abs(4 - i) > MN) {
                         MN = Math.abs(4 - i);
                     }
                 }

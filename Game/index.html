@@ -3,28 +3,41 @@
 <head>
     <title></title>
     <link href="style.css" rel="stylesheet" />
-    <link href='http://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700' rel='stylesheet' type='text/css' />
     <script src="Model/Juego.js"></script>
     <script src="Model/Posicion.js"></script>
     <script src="main.js"></script>
 </head>
-<body>
-    <header>
-        <h1 id="text"></h1>
-        <nav>
-            <ul>
-                <li><a href="#nuevojuego">Nuevo Juego</a></li>
-                <li></li>
-            </ul>
-        </nav>
-    </header>
-    <section>
-        <canvas id="canvas" width="300" height="300">
-            Su navegador no soporta el elemento canvas
-        </canvas>
-    </section>
-    <footer>
-
-    </footer>
+<body >
+    <div id="container" align="center">
+        <header>
+            <h1>Ajedrez para principiantes</h1>
+        </header>
+        <section>
+            <canvas id="canvas" width="300" height="300">
+                Su navegador no soporta el elemento canvas
+            </canvas>
+            <h3 id="text"></h3>
+            <section id="rules" align="left">
+                <ol id="main">
+                    <li>Empiezan las blancas.</li>
+                    <li>Los jugadores solo pueden mover una ficha en cada turno.</li>
+                    <li>Solo pueden mover una posicion hacia adelante si la casilla no esta ocupada</li>
+                    <li>
+                        Pueden moverse en diagonal hacia adelante si la casilla esta ocupada por una ficha
+                        del contrario, en este caso la ficha se retira.
+                    </li>
+                    <li>Un Jugadir gana cuando cuando se dan las siguientes condiciones: </li>
+                    <li id="ignore">
+                        <ul >
+                            <li>Una de las fichas del jugador a alcanzado alguna casilla del extremo opuesto.</li>
+                            <li>Todas las fichas del contrario han sido eliminadas.</li>
+                            <li>Le toca jugar al oponente pero no puede mover ninguna de sus fichas.</li>
+                        </ul>
+                    </li>
+                </ol>
+            </section>
+        </section>
+        <footer></footer>
+    </div>
 </body>
 </html>

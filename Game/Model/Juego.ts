@@ -1,5 +1,5 @@
 /// <reference path='Posicion.ts' />
-module model{
+module model {
     export enum Jugador {
         Jugador1 = 1, Jugador2 = 2
     }
@@ -103,13 +103,13 @@ module model{
             for (var i = 0; i < posibilidades.length; i++) {
                 var MN = posibilidades[i].obtenerMaximoNivel(); // Maximo nivel alcanzado
                 posibilidades[i].cambiarTurno();
-                var piezas_opnente = piezas_oponente_actuales - posibilidades[i].CantidadDePiezas();
+                var piezas_oponente = piezas_oponente_actuales - posibilidades[i].CantidadDePiezas();
                 var CMO = posibilidades[i].generarPosibilidades().length;  // Cantidad de movimientos del oponente
                 if (CMO == 0) {
                     pos = i;
                     break;
-                } else if (MN + piezas_opnente + CMO > MH) {
-                    MH = MN + CMO + piezas_opnente;
+                } else if (MN + piezas_oponente + CMO > MH) {
+                    MH = MN + CMO + piezas_oponente;
                     pos = i;
                 }
             }

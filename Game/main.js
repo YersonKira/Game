@@ -3,8 +3,9 @@ var Principal = (function () {
     function Principal(canvas) {
         var _this = this;
         this.posiblesmovimientos = null;
-        this.juego = new model.Juego(1 /* Jugador1 */);
-        document.getElementById('text').textContent = 'Jugador ' + this.juego.turno;
+        this.juego = new model.Juego(model.Jugador.Jugador1);
+        var text = document.getElementById('text');
+        text.textContent = 'Turno jugador ' + this.juego.turno;
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
         var posicionseleccionada = null;
@@ -22,6 +23,8 @@ var Principal = (function () {
             var columna = Math.ceil((e.x - _this.canvas.offsetLeft) / lado);
             var fila = Math.ceil((e.y - _this.canvas.offsetTop) / lado);
             var pos = new model.Posicion(fila, columna);
+            console.log(pos.toString());
+            console.log(_this.juego.turno);
             if ((_this.posiblesmovimientos == null || _this.juego.verificarTurno(pos)) && _this.juego.tablero[pos.fila][pos.columna] != 0) {
                 if (_this.juego.verificarTurno(pos)) {
                     posicionseleccionada = pos;
@@ -37,18 +40,21 @@ var Principal = (function () {
                             alert('Ganador Jugador 1');
                         }
                         _this.juego.cambiarTurno();
-                        if (_this.juego.turno == 2 /* Jugador2 */) {
+                        text.textContent = 'Turno jugador ' + _this.juego.turno;
+                        if (_this.juego.turno == model.Jugador.Jugador2) {
                             // Hacer jugada
                             setTimeout(function () {
                                 _this.juego.obtenerMejorJugada();
                                 _this.dibujarTablero();
                                 if (_this.juego.yaGane()) {
                                     alert('Ganador Jugador 2');
+                                    return;
                                 }
                                 _this.juego.cambiarTurno();
-                            }, 500);
+                                text.textContent = 'Turno jugador ' + _this.juego.turno;
+                            }, 1000);
                         }
-                        document.getElementById('text').textContent = 'Jugador ' + _this.juego.turno;
+
                         break;
                     }
                 }
